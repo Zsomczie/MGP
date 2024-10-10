@@ -10,7 +10,7 @@
                     "type": "PassThrough",
                     "id": "36bfe016-60c2-44cb-aaf0-4d103a60e2dc",
                     "expectedControlType": "",
-                    "processors": "",
+                    "processors": "ScaleVector3(y=0,z=0)",
                     "interactions": "",
                     "initialStateCheck": false
                 },
@@ -30,7 +30,7 @@
                     "id": "c7098951-471d-441b-b5d0-925132471e6a",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector3(y=0,z=0)",
                     "groups": "",
                     "action": "Move",
                     "isComposite": false,
