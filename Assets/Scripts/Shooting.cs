@@ -5,8 +5,20 @@ using UnityEngine;
 public class Shooting : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
-    [SerializeField] float FireRate;
+    [SerializeField] public float FireRate;
+    public static Shooting instance;
 
+    private void Awake()
+    {
+        if (instance == null) 
+        { 
+            instance = this; 
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     // Update is called once per frame
     void Start()
     {
