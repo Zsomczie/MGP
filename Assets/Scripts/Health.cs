@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,9 +29,15 @@ public class Health : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 Instantiate(player, Shooting.instances[0].transform.position + (Vector3.left*2f), Quaternion.identity, Shooting.instances[0].transform);
-                Destroy(gameObject);
+                transform.DOScale(0f, 1f);
+                StartCoroutine(waitAndDestroy());
             }
         }
+    }
+    IEnumerator waitAndDestroy() 
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
     private void OnDestroy()
     {
