@@ -6,22 +6,25 @@ public class Shooting : MonoBehaviour
 {
     [SerializeField] GameObject bullet;
     [SerializeField] public float FireRate;
-    public static List<Shooting> instances;
+    public static Shooting instance;
 
     private void Awake()
     {
-        if (instances == null) 
+        if (instance == null) 
         { 
-            instances = new List<Shooting>(); 
+            instance = this; 
         }
-        instances.Add(this);
+        else
+        {
+            Destroy(this);
+        }
     }
     // Update is called once per frame
     void Start()
     {
         InvokeRepeating("SpawnBullet", 1, FireRate);
     }
-    void SpawnBullet() 
+     void SpawnBullet() 
     {
         Instantiate(bullet,transform.position,transform.rotation);
     }
