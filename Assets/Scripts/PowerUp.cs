@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -31,13 +32,17 @@ public class PowerUp : MonoBehaviour
                 health--;
                 healthText.text = health.ToString();
                 Destroy(other.gameObject);
+                Camera.main.transform.DOPunchPosition(Vector3.down, 1f, 5);
             }
 
             //if health is 0, we destroy the object
             else
             {
+                
                 Destroy(other.gameObject);
-                Destroy(gameObject);
+
+                //Before destroying the object, scale it down to 0 under 0.5 seconds
+                transform.DOScale(0f, 0.5f).OnComplete(()=> Destroy(gameObject));
             }
         }
         //if the object we hit is of the "Player" layer
