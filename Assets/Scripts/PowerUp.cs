@@ -31,18 +31,30 @@ public class PowerUp : MonoBehaviour
             {
                 health--;
                 healthText.text = health.ToString();
+
+                var mySequence = DOTween.Sequence();
+                var mat=transform.GetComponent<MeshRenderer>().materials[0];
+                mat.DOColor(Color.red, 0.5f);
+                mySequence
+                    .Append(transform.DOPunchPosition(Vector3.forward, 0.5f, 5))
+                    .Insert(0, mat.DOColor(Color.red, 0.5f))
+                    .Append(mat.DOColor(Color.yellow, 0.5f));
+
+                //transform.DOPunchPosition(Vector3.forward, 0.5f, 5);
                 Destroy(other.gameObject);
-                Camera.main.transform.DOPunchPosition(Vector3.down, 1f, 5);
+                //Camera.main.transform.DOPunchPosition(Vector3.down, 0.1f, 1);
             }
 
             //if health is 0, we destroy the object
             else
             {
-                
+
                 Destroy(other.gameObject);
 
                 //Before destroying the object, scale it down to 0 under 0.5 seconds
-                transform.DOScale(0f, 0.5f).OnComplete(()=> Destroy(gameObject));
+                transform.DOScale(0f, 0.5f)
+                    .OnComplete(() 
+                    => { Destroy(gameObject); transform.DOKill(); });
             }
         }
         //if the object we hit is of the "Player" layer
@@ -67,6 +79,10 @@ public class PowerUp : MonoBehaviour
     private void OnDestroy()
     {
         //When destroying the object, we gain more firerate
+        var mat = PlayerHealth.instance.gameObject.GetComponent<MeshRenderer>().materials[0];
+
+        mat.DOColor(Random.ColorHSV(), 0.5f);
+
         Shooting.instance.FireRate *= 0.5f;
         Shooting.instance.CancelInvoke();
         Shooting.instance.InvokeRepeating("SpawnBullet", 1, Shooting.instance.FireRate);
