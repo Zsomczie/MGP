@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class PowerUp : MonoBehaviour
 {
@@ -29,10 +30,28 @@ public class PowerUp : MonoBehaviour
             //if health is more than 1, we decrease the health
             if (health > 1)
             {
+                //we damage the player, a.k.a. decrease health by 1
                 health--;
+
+                //display the health as text
                 healthText.text = health.ToString();
+
+                //destroy the bullet when it hits the enemy
                 Destroy(other.gameObject);
-                Camera.main.transform.DOPunchPosition(Vector3.down, 1f, 5);
+
+                //Getting the material of the enemy and creating a new sequence
+                var mat = transform.GetComponent<MeshRenderer>().material;
+                Sequence mySequence = DOTween.Sequence();
+
+                //adding functions to the sequence
+                mySequence
+                    .Append(transform.DOPunchPosition(Vector3.forward, 0.5f, 2))
+                    .Insert(0, mat.DOColor(Color.red, 0.5f))
+                    .Append(mat.DOColor(Color.yellow, 0.5f));
+                
+
+                
+                //Camera.main.transform.DOPunchPosition(Vector3.down, 1f, 5);
             }
 
             //if health is 0, we destroy the object
@@ -66,9 +85,16 @@ public class PowerUp : MonoBehaviour
     }
     private void OnDestroy()
     {
+        //getting the material of the player, and changing to a random color with DOTween 
+        var mat = Shooting.instance.gameObject.GetComponent<MeshRenderer>().material;
+        mat.DOColor(Random.ColorHSV(), 0.2f);
+
         //When destroying the object, we gain more firerate
         Shooting.instance.FireRate *= 0.5f;
         Shooting.instance.CancelInvoke();
         Shooting.instance.InvokeRepeating("SpawnBullet", 1, Shooting.instance.FireRate);
+
+        //Killing all DOTween functions, so they don't take performance
+        transform.DOKill();
     }
 }
