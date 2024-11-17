@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static PlayerInputs;
 [CreateAssetMenu(fileName ="New Input",menuName ="Input/Input Reader")]
-public class InputReader : ScriptableObject, IPlayerActions
+public class InputReader : MonoBehaviour, IPlayerActions
 {
     public event Action<Vector3> OnGyroMovement;
     // Start is called before the first frame update
@@ -32,6 +32,8 @@ public class InputReader : ScriptableObject, IPlayerActions
     }
     public void OnGyroMove(InputAction.CallbackContext context)
     {
+        Vector3 MoveInput=context.ReadValue<Vector3>();
 
+        OnGyroMovement?.Invoke(MoveInput);
     }
 }

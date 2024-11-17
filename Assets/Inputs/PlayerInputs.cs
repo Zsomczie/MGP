@@ -48,7 +48,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""GyroMove"",
                     ""type"": ""Value"",
-                    ""id"": ""1980765a-14de-4f62-b204-ba1a4dd207bd"",
+                    ""id"": ""af60ff1b-5105-4d29-af3a-34b65ff1ec2c"",
                     ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -102,7 +102,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d164b2e4-985e-41f3-a860-967a161282db"",
+                    ""id"": ""aeed2096-5972-4068-b3e3-41dd07a59e3e"",
                     ""path"": ""<Accelerometer>/acceleration"",
                     ""interactions"": """",
                     ""processors"": """",
